@@ -6,7 +6,7 @@ class Categories extends React.Component {
     super(props);
     this.state = {
       list: [],
-      ss: [],
+      shortName: [],
       info: [],
       selected: null,
       selectedIndex: 0
@@ -20,7 +20,7 @@ class Categories extends React.Component {
         for (let obj of response) {
           this.setState({
             list: [...this.state.list, obj.name],
-            ss: [...this.state.ss, obj.short_name]
+            shortName: [...this.state.shortName, obj.short_name]
           });
         }
       });
@@ -31,9 +31,7 @@ class Categories extends React.Component {
       info: []
     });
     fetch(
-      `https://stream-restaurant-menu-svc.herokuapp.com/item?category=${
-        this.state.ss[index]
-      }`
+      `https://stream-restaurant-menu-svc.herokuapp.com/item?category=${this.state.shortName[index]}`
     )
       .then(response => response.json())
       .then(response => {
@@ -47,7 +45,7 @@ class Categories extends React.Component {
       });
 
     this.setState({
-      selected: this.state.ss[index],
+      selected: this.state.shortName[index],
       selectedIndex: index
     });
   };
@@ -60,7 +58,7 @@ class Categories extends React.Component {
           {this.state.list.map((item, index) => {
             return (
               <li key={item} onClick={this.handleClick.bind(this, index)}>
-                {item} - ({this.state.ss[index]})
+                {item} - ({this.state.shortName[index]})
               </li>
             );
           })}
